@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "961933865110",
+    "firebase_url": "https://unipin-6dfae-default-rtdb.firebaseio.com",
+    "project_id": "unipin-6dfae",
+    "storage_bucket": "unipin-6dfae.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:961933865110:android:0c1729435e4ca1ec9992b7",
+        "android_client_info": {
+          "package_name": "com.example.unipin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "961933865110-g7ain8ifum6f5mb7em3e7kmj6s96bfq5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDZLmzeM3M0PXZVx4ItAOTZyFNhSf6wXy8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "961933865110-g7ain8ifum6f5mb7em3e7kmj6s96bfq5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
