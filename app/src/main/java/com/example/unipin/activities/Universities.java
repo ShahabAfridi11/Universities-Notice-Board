@@ -42,6 +42,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -63,6 +64,7 @@ public class Universities extends AppCompatActivity implements NavigationView.On
 
     private DatabaseReference profileRef;
     private String currentUser;
+    boolean count = true;
 
 
 
@@ -95,6 +97,8 @@ public class Universities extends AppCompatActivity implements NavigationView.On
 
         init();
         loadFireBaseData();
+
+        checkForProgress();
 
         profileRef.child("users").addChildEventListener(new ChildEventListener() {
             @Override
@@ -162,6 +166,7 @@ public class Universities extends AppCompatActivity implements NavigationView.On
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 if(dataSnapshot.exists()){
                     progressDialog.dismiss();
+                    count = true;
                     UniversityModel univ = dataSnapshot.getValue(UniversityModel.class);
                     mUni.add(univ);
                     mUniversityAdapter = new UniversityAdapter(mUni,Universities.this);
@@ -169,9 +174,6 @@ public class Universities extends AppCompatActivity implements NavigationView.On
                     mUniversitiesList.setAdapter(mUniversityAdapter);
 
                 }
-//                else if(dataSnapshot.){
-//
-//                }
             }
 
             @Override
@@ -195,7 +197,46 @@ public class Universities extends AppCompatActivity implements NavigationView.On
             }
         });
 
+    }
 
+    private void checkForProgress() {
+
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull @org.jetbrains.annotations.NotNull DataSnapshot snapshot) {
+                if(snapshot.hasChild("universities")){
+                    progressDialog.dismiss();
+                }else {
+                    progressDialog.dismiss();
+                    AlertDialog.Builder dialog = new AlertDialog.Builder(Universities.this);
+                    dialog.setIcon(R.drawable.exit_app);
+                    dialog.setTitle("Exit Application");
+                    dialog.setMessage("No Data Found! \nDo you want to exit App ?");
+                    dialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            finish();
+                        }
+                    });
+                    dialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+
+                    dialog.create();
+                    dialog.show();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull @org.jetbrains.annotations.NotNull DatabaseError error) {
+
+            }
+        });
 
     }
 
